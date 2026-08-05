@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose)
+    id("com.google.devtools.ksp")
 }
 
 configurations.all {
@@ -60,7 +61,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     // Room dependencies
-    implementation(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
 
