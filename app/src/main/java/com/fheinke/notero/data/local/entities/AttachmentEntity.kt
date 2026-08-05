@@ -20,11 +20,10 @@ import androidx.room.PrimaryKey
 )
 data class AttachmentEntity (
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
 
     val journalEntryId: Long,
     val uri: String,
     val mimeType: String,
-    @ColumnInfo(defaultValue = "")
-    val caption: String?
+    val caption: String? = null
     )

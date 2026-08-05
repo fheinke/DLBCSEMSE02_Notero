@@ -1,12 +1,13 @@
 package com.fheinke.notero.data.local.relation
 
 import com.fheinke.notero.data.local.entities.AttachmentEntity
+import com.fheinke.notero.data.local.entities.JournalEntryEntity
 import androidx.room.Embedded
 import androidx.room.Relation
 
 data class JournalEntryWithAttachments (
     @Embedded
-    val entry: com.fheinke.notero.data.local.entities.JournalEntryEntity,
+    val entry: JournalEntryEntity,
 
     @Relation(
         parentColumn = "id",
