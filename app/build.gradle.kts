@@ -3,6 +3,13 @@ plugins {
     alias(libs.plugins.compose)
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("org.jetbrains:annotations:23.0.0")
+    }
+    exclude(group = "com.intellij", module = "annotations")
+}
+
 android {
     namespace = "com.fheinke.notero"
     compileSdk {
@@ -45,36 +52,31 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
+    //androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-    // Material Design 3
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.compose.material3)
-
-    // UI Tests
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    // Room dependencies
+    implementation(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
 
     // Optional - Add window size utils
     implementation(libs.androidx.compose.adaptive)
 
-    // Optional - Integration with activities
-    implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation(libs.androidx.compose.runtime.livedata)
     // Optional - Integration with RxJava
-    implementation("androidx.compose.runtime:runtime-rxjava2")
+    implementation(libs.androidx.compose.runtime.rxjava2)
 
     // Additional Material icon dependencies
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.compose.material:material-icons-core")
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material.icons.core)
 
     // Optional - Integration with Navigation
     implementation(libs.androidx.navigation.compose)

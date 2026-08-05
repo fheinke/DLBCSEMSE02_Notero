@@ -1,4 +1,4 @@
-package com.fheinke.notero
+package com.fheinke.notero.ui.overview
 
 import com.fheinke.notero.ui.theme.NoteroTheme
 import android.os.Bundle
@@ -91,7 +91,7 @@ fun PlaylistScreen(modifier: Modifier = Modifier) {
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    startDestination: com.fheinke.notero.Destination,
+    startDestination: Destination,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -99,9 +99,9 @@ fun AppNavHost(
         startDestination = startDestination.route,
         modifier = modifier
     ) {
-        composable(com.fheinke.notero.Destination.NOTERO.route) { NoteroScreen() }
-        composable(com.fheinke.notero.Destination.ALBUM.route) { AlbumScreen() }
-        composable(com.fheinke.notero.Destination.PLAYLISTS.route) { PlaylistScreen() }
+        composable(Destination.NOTERO.route) { NoteroScreen() }
+        composable(Destination.ALBUM.route) { AlbumScreen() }
+        composable(Destination.PLAYLISTS.route) { PlaylistScreen() }
     }
 }
 
@@ -109,12 +109,12 @@ fun AppNavHost(
 @Composable
 fun NoteroApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    val startDestination = com.fheinke.notero.Destination.NOTERO
+    val startDestination = Destination.NOTERO
     var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
 
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
-    val currentTitle = com.fheinke.notero.Destination.entries.find { it.route == currentRoute }?.label ?: startDestination.label
+    val currentTitle = Destination.entries.find { it.route == currentRoute }?.label ?: startDestination.label
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -123,7 +123,7 @@ fun NoteroApp(modifier: Modifier = Modifier) {
         },
         bottomBar = {
             NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
-                com.fheinke.notero.Destination.entries.forEachIndexed { index, destination ->
+                Destination.entries.forEachIndexed { index, destination ->
                     NavigationBarItem(
                         selected = selectedDestination == index,
                         onClick = {
@@ -142,7 +142,7 @@ fun NoteroApp(modifier: Modifier = Modifier) {
             }
         }
     ) { contentPadding ->
-        com.fheinke.notero.AppNavHost(
+        AppNavHost(
             navController,
             startDestination,
             modifier = Modifier.padding(contentPadding)
