@@ -1,4 +1,6 @@
 package com.fheinke.notero.ui.editor
 
-class EntryEditorActivity {
+import androidx.activity.ComponentActivity
+
+class EntryEditorActivity : ComponentActivity() {
 }
