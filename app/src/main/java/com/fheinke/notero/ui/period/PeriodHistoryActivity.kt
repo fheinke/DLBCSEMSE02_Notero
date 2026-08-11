@@ -1,4 +1,6 @@
 package com.fheinke.notero.ui.period
 
-class PeriodHistoryActivity {
+import androidx.activity.ComponentActivity
+
+class PeriodHistoryActivity : ComponentActivity() {
 }

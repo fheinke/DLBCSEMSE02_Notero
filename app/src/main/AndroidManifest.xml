@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -11,18 +11,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Notero">
+
+        <!-- NoteroApplication as Launcher Activity -->
         <activity
-            android:name=".ui.overview.MainActivity"
+            android:name=".NoteroApplication"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Notero"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- WelcomeActivity for onboarding -->
+        <activity
+            android:name=".ui.welcome.WelcomeActivity"
+            android:theme="@style/Theme.Notero" />
+
+        <!-- MainActivity for the standard app interface -->
+        <activity
+            android:name=".ui.overview.MainActivity"
+            android:theme="@style/Theme.Notero" />
+
+        <!-- Other activities -->
+        <activity android:name=".ui.period.PeriodHistoryActivity" />
+        <activity android:name=".ui.editor.EntryEditorActivity" />
+        <activity android:name=".ui.detail.EntryDetailActivity" />
     </application>
 
 </manifest>

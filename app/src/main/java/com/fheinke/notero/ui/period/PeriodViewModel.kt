@@ -1,4 +1,6 @@
 package com.fheinke.notero.ui.period
 
-class PeriodViewModel {
+import androidx.lifecycle.ViewModel
+
+class PeriodViewModel : ViewModel() {
 }

@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
-import androidx.compose.material.icons.filled.MusicNote
-import androidx.compose.material.icons.filled.PlaylistAddCircle
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -53,38 +53,38 @@ enum class Destination(
     val icon: ImageVector,
     val contentDescription: String
 ) {
-    NOTERO("notero", "Notero", Icons.Default.MusicNote, "Notero"),
-    ALBUM("album", "Album", Icons.Default.Album, "Album"),
-    PLAYLISTS("playlist", "Playlist", Icons.Default.PlaylistAddCircle, "Playlist")
+    JOURNAL("journal", "Journal", Icons.Default.Book, "Journal"),
+    PERIODRECORD("periodRecord", "PeriodRecord", Icons.Default.CalendarMonth, "PeriodRecord"),
+    SETTINGS("settings", "Settings", Icons.Default.Settings, "Settings")
 }
 
 @Composable
-fun NoteroScreen(modifier: Modifier = Modifier) {
+fun JournalScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("Notero Screen")
+        Text("Journal Screen")
     }
 }
 
 @Composable
-fun AlbumScreen(modifier: Modifier = Modifier) {
+fun PeriodRecordScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("Album Screen")
+        Text("PeriodRecord Screen")
     }
 }
 
 @Composable
-fun PlaylistScreen(modifier: Modifier = Modifier) {
+fun SettingsScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("Playlist Screen")
+        Text("Settings Screen")
     }
 }
 
@@ -99,9 +99,9 @@ fun AppNavHost(
         startDestination = startDestination.route,
         modifier = modifier
     ) {
-        composable(Destination.NOTERO.route) { NoteroScreen() }
-        composable(Destination.ALBUM.route) { AlbumScreen() }
-        composable(Destination.PLAYLISTS.route) { PlaylistScreen() }
+        composable(Destination.JOURNAL.route) { JournalScreen() }
+        composable(Destination.PERIODRECORD.route) { PeriodRecordScreen() }
+        composable(Destination.SETTINGS.route) { SettingsScreen() }
     }
 }
 
@@ -109,7 +109,7 @@ fun AppNavHost(
 @Composable
 fun NoteroApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    val startDestination = Destination.NOTERO
+    val startDestination = Destination.JOURNAL
     var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
 
     val currentBackStackEntry by navController.currentBackStackEntryAsState()

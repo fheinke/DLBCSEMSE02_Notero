@@ -1,30 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:endX="85.84757"
-                android:endY="92.4963"
-                android:startX="42.9492"
-                android:startY="49.59793"
-                android:type="linear">
-                <item
-                    android:color="#44000000"
-                    android:offset="0.0" />
-                <item
-                    android:color="#00000000"
-                    android:offset="1.0" />
-            </gradient>
-        </aapt:attr>
-    </path>
+
+    <!-- Cycle ring, kept behind the journal -->
     <path
-        android:fillColor="#FFFFFF"
-        android:fillType="nonZero"
-        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
-        android:strokeWidth="1"
-        android:strokeColor="#00000000" />
+        android:pathData="M25,29 A38,38 0,0 1,72 18"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFD4C8"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M79,20 A38,38 0,0 1,84 23"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#F7A0A8"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M88,28 A38,38 0,0 1,91 34"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#F47A91"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M93,40 A38,38 0,0 1,93 47"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#E75C83"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M92,55 A38,38 0,1 1,24 30"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#A74A78"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round" />
+
+    <!-- Soft, flat shadow -->
+    <path
+        android:pathData="M35,33 H74 Q79,33 79,38 V76 Q79,81 74,81 H35 Q30,81 30,76 V38 Q30,33 35,33 Z"
+        android:fillColor="#553A2341" />
+
+    <!-- Journal -->
+    <path
+        android:pathData="M34,30 H73 Q78,30 78,35 V74 Q78,79 73,79 H34 Q29,79 29,74 V35 Q29,30 34,30 Z"
+        android:fillColor="#FFF9FA" />
+    <path
+        android:pathData="M34,30 H38 V79 H34 Q29,79 29,74 V35 Q29,30 34,30 Z"
+        android:fillColor="#FCEEF2" />
+    <path
+        android:pathData="M35,30 H38 V79 H35 Z"
+        android:fillColor="#B8587C" />
+
+    <!-- Journal text -->
+    <path
+        android:pathData="M45,45 H67"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#D38CA4"
+        android:strokeWidth="2.3"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M45,53 H67"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#D38CA4"
+        android:strokeWidth="2.3"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M45,61 H57"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#D38CA4"
+        android:strokeWidth="2.3"
+        android:strokeLineCap="round" />
+
+    <!-- Bookmark -->
+    <path
+        android:pathData="M41,77 H50 V87 Q50,88 49,87 L45.5,84.5 L42,87 Q41,88 41,86 Z"
+        android:fillColor="#B84E72" />
+
+    <!-- Photo attachment card -->
+    <group
+        android:pivotX="72"
+        android:pivotY="70"
+        android:rotation="-7">
+        <path
+            android:pathData="M60,61 H83 Q87,61 87,65 V79 Q87,83 83,83 H60 Q56,83 56,79 V65 Q56,61 60,61 Z"
+            android:fillColor="#4A3B2341" />
+        <path
+            android:pathData="M59,59 H83 Q87,59 87,63 V78 Q87,82 83,82 H59 Q55,82 55,78 V63 Q55,59 59,59 Z"
+            android:fillColor="#FFF9FA" />
+        <path
+            android:pathData="M60,62 H82 Q84,62 84,64 V77 Q84,79 82,79 H60 Q58,79 58,77 V64 Q58,62 60,62 Z"
+            android:fillColor="#F7B2C0" />
+        <path
+            android:pathData="M61.5,75 L67,69 L73,75 L78,66 L84,72 V77 Q84,79 82,79 H60 Q58,79 58,77 Z"
+            android:fillColor="#87406E" />
+        <path
+            android:pathData="M63,75 L69,70 L77,79 H60 Q58,79 58,77 Z"
+            android:fillColor="#6E3564" />
+        <path
+            android:pathData="M65,65 m-2.3,0 a2.3,2.3 0,1 0,4.6 0 a2.3,2.3 0,1 0,-4.6 0"
+            android:fillColor="#F06F7E" />
+    </group>
 </vector>

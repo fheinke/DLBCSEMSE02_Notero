@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AttachmentDao {
     @Query("SELECT * FROM attachments WHERE journalEntryId = :journalEntryId")
-    suspend fun getByJournalEntryId(journalEntryId: Long): Flow<List<AttachmentEntity>>
+    fun getByJournalEntryId(journalEntryId: Long): Flow<List<AttachmentEntity>>
 
     @Upsert
     suspend fun upsert(attachment: AttachmentEntity)
@@ -19,5 +19,5 @@ interface AttachmentDao {
     suspend fun delete(attachment: AttachmentEntity)
 
     @Query("DELETE FROM attachments WHERE id = :id")
-    suspend fun deleteById(id: Long)
+    fun deleteById(id: Long)
 }
