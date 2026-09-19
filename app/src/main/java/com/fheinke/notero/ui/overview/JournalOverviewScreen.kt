@@ -2,7 +2,6 @@ package com.fheinke.notero.ui.overview
 
 import com.fheinke.notero.R
 import com.fheinke.notero.data.local.entities.JournalEntryEntity
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
