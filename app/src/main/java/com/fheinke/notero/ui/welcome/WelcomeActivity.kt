@@ -1,5 +1,9 @@
 package com.fheinke.notero.ui.welcome
 
+import com.fheinke.notero.R
+import com.fheinke.notero.data.repository.UserPreferencesRepository
+import com.fheinke.notero.ui.overview.MainActivity
+import com.fheinke.notero.ui.theme.NoteroTheme
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,15 +37,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.fheinke.notero.data.preferences.UserPreferencesRepository
-import com.fheinke.notero.ui.overview.MainActivity
-import com.fheinke.notero.ui.theme.NoteroTheme
 
+/**
+ * Activity that welcomes the user and collects their name, gender, and period tracking preference.
+ *
+ * This activity is shown when the app is launched for the first time, and it saves the user's preferences using [UserPreferencesRepository].
+ */
 class WelcomeActivity : ComponentActivity() {
     private lateinit var userPreferencesRepository: UserPreferencesRepository
 
+    /**
+     * Called when the activity is starting. This is where most initialization should go.
+     * Here, we set up the UI using Jetpack Compose and handle user input.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied. Otherwise, it is null.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -59,6 +74,13 @@ class WelcomeActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Saves the user's data to the [UserPreferencesRepository].
+     *
+     * @param name The user's name.
+     * @param gender The user's gender (can be null).
+     * @param periodTracking Whether period tracking is enabled.
+     */
     private fun saveUserData(name: String, gender: String?, periodTracking: Boolean) {
         userPreferencesRepository.setUserName(name)
         userPreferencesRepository.setUserGender(gender)
@@ -66,12 +88,21 @@ class WelcomeActivity : ComponentActivity() {
         userPreferencesRepository.setOnboardingCompleted(true)
     }
 
+    /**
+     * Navigates to the main application activity ([MainActivity]) and finishes the current activity.
+     */
     private fun navigateToMainApp() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 }
 
+/**
+ * Composable function that displays the welcome screen where the user can input their name, select their gender, and choose whether to enable period tracking.
+ *
+ * @param onComplete Callback function that is invoked when the user completes the form. It provides the user's name, selected gender, and period tracking preference.
+ * @param modifier Modifier to be applied to the layout.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(
@@ -87,7 +118,7 @@ fun WelcomeScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text("Welcome to Notero") }
+                title = { Text(stringResource(R.string.welcome_text)) }
             )
         }
     ) {
@@ -101,7 +132,7 @@ fun WelcomeScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             Text(
-                text = "Let's get started!",
+                text = stringResource(R.string.welcome_subtitle),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
@@ -113,11 +144,11 @@ fun WelcomeScreen(
                     name = it
                     showError = false
                 },
-                label = { Text("Your Name") },
-                placeholder = { Text("Enter your name") },
+                label = { Text(stringResource(R.string.your_name)) },
+                placeholder = { Text(stringResource(R.string.enter_your_name)) },
                 isError = showError,
                 supportingText = if (showError) {
-                    { Text("Please enter your name") }
+                    { Text(stringResource(R.string.enter_your_name)) }
                 } else null,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -126,24 +157,30 @@ fun WelcomeScreen(
             // Gender Selection
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = "Your Gender (Optional)",
+                    text = stringResource(R.string.your_gender_optional),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium
                 )
 
                 listOf(
-                    "male" to "Male",
-                    "female" to "Female",
-                    "other" to "Other",
-                    null to "Not Specified"
+                    "male" to stringResource(R.string.male),
+                    "female" to stringResource(R.string.female),
+                    "other" to stringResource(R.string.other),
+                    null to stringResource(R.string.not_specified)
                 ).forEach { (value, label) ->
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(
+                                selected = selectedGender == value,
+                                onClick = { selectedGender = value },
+                                role = Role.RadioButton
+                            ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
                             selected = selectedGender == value,
-                            onClick = { selectedGender = value }
+                            onClick = null
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(label)
@@ -157,12 +194,12 @@ fun WelcomeScreen(
 
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Enable Period Tracking",
+                        text = stringResource(R.string.enable_period_tracking),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = "Track your menstrual cycle to receive insights and reminders.",
+                        text = stringResource(R.string.period_tracking_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -176,7 +213,7 @@ fun WelcomeScreen(
                             onCheckedChange = { periodTrackingEnabled = it }
                         )
                         Spacer(modifier = Modifier.width(12.dp))
-                        Text(if (periodTrackingEnabled) "Active" else "Inactive")
+                        Text(if (periodTrackingEnabled) stringResource(R.string.active) else stringResource(R.string.inactive))
                     }
                 }
             }
@@ -193,7 +230,7 @@ fun WelcomeScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Let's Go")
+                Text(stringResource(R.string.welcome_subtitle))
             }
         }
     }
