@@ -28,6 +28,6 @@ To generate the documentation for Notero, you can use a documentation generator 
    ```bash
    ./gradlew dokkaGenerate
    ```
-3. The generated documentation can be found in the `build/dokka` directory.
+3. The generated documentation can be found in the `app/build/dokka/html` directory.
 4. You can view the documentation by opening the `index.html` file in a web browser.
 
