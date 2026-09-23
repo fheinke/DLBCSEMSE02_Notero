@@ -2,6 +2,8 @@
 
 Notero is a simple and efficient note-taking application designed to help you organize your thoughts, ideas, and tasks. With a clean interface and powerful features, Notero makes it easy to capture and manage your notes.
 
+![Notero Logo](images/notero_icon.png)
+
 ## Development
 To set up the development environment for Notero, follow these steps:
 1. Clone the repository
