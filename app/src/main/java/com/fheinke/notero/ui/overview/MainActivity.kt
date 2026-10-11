@@ -45,6 +45,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -68,32 +71,33 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val app = application as NoteroApplication
-
         val userPreferencesRepository = UserPreferencesRepository(this)
 
-        if (!userPreferencesRepository.isOnboardingCompleted()) {
-            startActivity(Intent(this, WelcomeActivity::class.java))
-            finish()
-            return
-        }
+        lifecycleScope.launch {
+            if (!userPreferencesRepository.onboardingCompleted.first()) {
+                startActivity(Intent(this@MainActivity, WelcomeActivity::class.java))
+                finish()
+                return@launch
+            }
 
-        val settingsViewModel: SettingsViewModel by viewModels {
-            SettingsViewModel.factory(userPreferencesRepository)
-        }
+            val settingsViewModel: SettingsViewModel by viewModels {
+                SettingsViewModel.factory(userPreferencesRepository)
+            }
 
-        val journalViewModel: JournalOverviewViewModel by viewModels {
-            JournalOverviewViewModel.factory(app.journalRepository)
-        }
+            val journalViewModel: JournalOverviewViewModel by viewModels {
+                JournalOverviewViewModel.factory(app.journalRepository)
+            }
 
-        val periodViewModel: PeriodViewModel by viewModels {
-            PeriodViewModel.factory(app.periodRepository)
-        }
+            val periodViewModel: PeriodViewModel by viewModels {
+                PeriodViewModel.factory(app.periodRepository)
+            }
 
-        enableEdgeToEdge()
+            enableEdgeToEdge()
 
-        setContent {
-            NoteroTheme {
-                NoteroApp(settingsViewModel = settingsViewModel, journalViewModel = journalViewModel, periodViewModel = periodViewModel)
+            setContent {
+                NoteroTheme {
+                    NoteroApp(settingsViewModel = settingsViewModel, journalViewModel = journalViewModel, periodViewModel = periodViewModel)
+                }
             }
         }
     }

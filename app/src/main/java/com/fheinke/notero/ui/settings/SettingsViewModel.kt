@@ -3,10 +3,13 @@ package com.fheinke.notero.ui.settings
 import com.fheinke.notero.data.repository.UserPreferencesRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel for the Settings screen.
@@ -18,14 +21,18 @@ class SettingsViewModel(
     private val prefs: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(
-        SettingsUiState(
-            userName = prefs.getUserName() ?: "",
-            gender = prefs.getUserGender(),
-            periodTrackingEnabled = prefs.isPeriodTrackingEnabled()
-        )
-    )
+    private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState
+
+    init {
+        viewModelScope.launch {
+            _uiState.value = SettingsUiState(
+                userName = prefs.userName.first() ?: "",
+                gender = prefs.userGender.first(),
+                periodTrackingEnabled = prefs.periodTrackingEnabled.first()
+            )
+        }
+    }
 
     /**
      * Updates the userName in the UI state.
@@ -46,8 +53,10 @@ class SettingsViewModel(
             gender = value,
             periodTrackingEnabled = if (value != "female") false else _uiState.value.periodTrackingEnabled
         )
-        prefs.setUserGender(value)
-        if (value != "female") prefs.setPeriodTrackingEnabled(false)
+        viewModelScope.launch {
+            prefs.setUserGender(value)
+            if (value != "female") prefs.setPeriodTrackingEnabled(false)
+        }
     }
 
     /**
@@ -57,14 +66,15 @@ class SettingsViewModel(
      */
     fun onPeriodTrackingChange(value: Boolean) {
         _uiState.value = _uiState.value.copy(periodTrackingEnabled = value)
-        prefs.setPeriodTrackingEnabled(value)
+        viewModelScope.launch { prefs.setPeriodTrackingEnabled(value) }
     }
 
     /**
      * Saves the current userName to the preferences.
      */
     fun saveUserName() {
-        prefs.setUserName(_uiState.value.userName.trim())
+        val name = _uiState.value.userName.trim()
+        viewModelScope.launch { prefs.setUserName(name) }
     }
 
     companion object {

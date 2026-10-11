@@ -47,7 +47,6 @@ android {
 }
 
 dependencies {
-    //implementation(platform(libs.androidx.compose.bom))
     implementation(libs.google.material)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
@@ -65,6 +64,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // DataStore dependencies
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
 
     // Room dependencies
     ksp(libs.androidx.room.compiler)

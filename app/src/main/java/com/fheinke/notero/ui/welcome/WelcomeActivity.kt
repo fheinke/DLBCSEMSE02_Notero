@@ -9,6 +9,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -66,8 +68,10 @@ class WelcomeActivity : ComponentActivity() {
             NoteroTheme {
                 WelcomeScreen(
                     onComplete = { name, gender, periodTrackingEnabled ->
-                        saveUserData(name, gender, periodTrackingEnabled)
-                        navigateToMainApp()
+                        lifecycleScope.launch {
+                            saveUserData(name, gender, periodTrackingEnabled)
+                            navigateToMainApp()
+                        }
                     }
                 )
             }
@@ -81,11 +85,8 @@ class WelcomeActivity : ComponentActivity() {
      * @param gender The user's gender (can be null).
      * @param periodTracking Whether period tracking is enabled.
      */
-    private fun saveUserData(name: String, gender: String?, periodTracking: Boolean) {
-        userPreferencesRepository.setUserName(name)
-        userPreferencesRepository.setUserGender(gender)
-        userPreferencesRepository.setPeriodTrackingEnabled(periodTracking)
-        userPreferencesRepository.setOnboardingCompleted(true)
+    private suspend fun saveUserData(name: String, gender: String?, periodTracking: Boolean) {
+        userPreferencesRepository.completeOnboarding(name, gender, periodTracking)
     }
 
     /**
